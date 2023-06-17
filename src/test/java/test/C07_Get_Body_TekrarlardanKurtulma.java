@@ -5,59 +5,64 @@ import io.restassured.response.Response;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
+public class C07_Get_Body_TekrarlardanKurtulma {
 
-public class C07_Get_Body_TekrarlardanKurtulma{
-/*
-                https://restful-booker.herokuapp.com/booking/14018 url’ine
-                bir GET request gonderdigimizde donen Response’un,
+    /*
+               https://restful-booker.herokuapp.com/booking/10 url’ine
+               bir GET request gonderdigimizde donen Response’un,
 
-                status code’unun 200,
-                ve content type’inin application-json,
-                ve response body’sindeki
-                    "firstname“in,"James",
-                    ve "lastname“in, "Brown",
-                    ve "totalprice“in, 111,
-                    ve "depositpaid“in,true,
-                    ve "additionalneeds“in,"Breakfast"
-                oldugunu test edin
-
-         */
-
+               status code’unun 200,
+               ve content type’inin application/json; charset=utf-8,
+               ve response body’sindeki
+                   "firstname“in,"Susan",
+                   ve "lastname“in, "Wilson",
+                   ve "totalprice“in, 613,
+                   ve "depositpaid“in,false,
+                   ve "additionalneeds“in,"Breakfast"
+               oldugunu test edin
+        */
     @Test
-    public void get01(){
+    public void get01() {
 
-        // 1 - Request icin gerekli URL ve body olustur
-        String url="https://restful-booker.herokuapp.com/booking/14018";
+        // 1 - Url hazirla
 
-        // 2 - Expected datayi hazirla
-        // 3 - Response'u kaydet
-        Response response=given().when().get(url);
+        String url = "https://restful-booker.herokuapp.com/booking/10";
+
+        // 2 - Expected Data hazirla
+
+        // 3 - Response'i kaydet
+
+        Response response = given().when().get(url);
+
+        response.prettyPrint();
 
         // 4 - Assertion
-        /* response.
-                then().
-                assertThat().
-                statusCode(200).
-                contentType(ContentType.JSON).
-                body("firstname", Matchers.equalTo("James")).
-                body("lastname", Matchers.equalTo("Brown")).
-                body("totalprice", Matchers.equalTo(111)).
-                body("depositpaid", Matchers.equalTo(true)).
-                body("additionalneeds", Matchers.equalTo("Breakfast"));
 
-       */
+        /* response
+                 .then()
+                    .assertThat()
+                    .statusCode(200)
+                    .contentType("application/json; charset=utf-8")
+                    .body("firstname", Matchers.equalTo("Susan"),
+                            "lastname", Matchers.equalTo("Wilson"),
+                            "totalprice",Matchers.equalTo(613),
+                            "depositpaid", Matchers.equalTo(false),
+                            "additionalneeds", Matchers.equalTo("Breakfast"));
+        */
 
-        response.
-                then().
-                assertThat().
-                statusCode(200).
-                contentType(ContentType.JSON).
-                body("firstname", equalTo("James"),
-                        "lastname", equalTo("Brown"),
-                        "totalprice", greaterThan(110),
-                        "depositpaid", equalTo(true),
-                        "additionalneeds", containsString("Breakfast"));
+        response
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .contentType("application/json; charset=utf-8")
+                .body("firstname", equalTo("Susan"),
+                        "lastname", equalTo("Wilson"),
+                        "totalprice", equalTo(613),
+                        "depositpaid", equalTo(false),
+                        "additionalneeds", equalTo("Breakfast"));
+
+
     }
 }

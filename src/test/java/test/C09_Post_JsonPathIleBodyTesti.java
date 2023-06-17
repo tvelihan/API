@@ -73,10 +73,10 @@ import static org.hamcrest.Matchers.equalTo;
 
             response.
                     then().
-                    assertThat().
-                    statusCode(200).
-                    contentType(ContentType.JSON).
-                    body("booking.firstname", equalTo("Ali"),
+                        assertThat().
+                        statusCode(200).
+                        contentType(ContentType.JSON).
+                        body("booking.firstname", equalTo("Ali"),
                             "booking.lastname",equalTo("Bak"),
                             "booking.totalprice",equalTo(500),
                             "booking.depositpaid",equalTo(false),
